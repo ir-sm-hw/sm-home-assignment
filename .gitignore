@@ -1,0 +1,6 @@
+/*.pdf
+/dbconfig.php
+/composer.lock
+/nbproject
+/vendor/*
+/tests/test.dbconfig.php

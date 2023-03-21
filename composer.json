@@ -1,0 +1,35 @@
+{
+    "name": "ir/sm-php-assignment",
+    "type": "library",
+    "require-dev": {
+        "phpunit/phpunit": "^10.0"
+    },
+    "license": "cc0",
+    "authors": [
+        {
+            "name": "Illia Rezvin",
+            "email": "illia@rezvin.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "ext-mbstring": "*",
+        "ext-pdo_mysql": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Demo\\": "src/Demo",
+            "UserStorage\\": "src/UserStorage"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "UserStorageTest\\": "tests/UserStorageTest"
+        }
+    },
+    "scripts": {
+        "test": [
+            "phpunit tests"
+        ]
+    }
+}
