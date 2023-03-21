@@ -29,6 +29,10 @@ if (in_array('--replace', $args)) {
     $mode = 'replace';
     $args = array_diff($args, ['--replace']);
 }
+if (in_array('--find', $args)) {
+    $mode = 'find';
+    $args = array_diff($args, ['--find']);
+}
 
 $args = array_values($args);
 
@@ -57,23 +61,28 @@ $demoService = new \Demo\DemoSavingService($file, $factory);
 if ($mode === 'help') {
 ?>    
 Usage: php bin/demo.php [--load|--save|--replace|--delete] [jsonFileName]
+       or
+       php bin/demo.php --find id1, id2...
 
 jsonFilename: name of file with JSON data (array of objects with keys "id" and "name", and string values)
 
 --load      Load data from repository and dump it in JSON format
 --save      Validate and save records (don't save any if some IDs already exist)
 --replace   Validate and save records (replace if some IDs already exist)
---delete    Delete records with matching IDs
+--delete    Delete records with IDs matching ones in JSON file
+--find      Find records with specified IDs and dump them in JSON format
 
 If filename is not provided, by default will use '<?php echo realpath($defaultFile); ?>'.
 <?php    
 }
 else if ($mode === 'load') {
     echo json_encode(array_values([...$demoService->loadUsers()]), JSON_PRETTY_PRINT)."\n";
-} else if ($mode === 'delete') {
+} elseif ($mode === 'find') {
+    echo json_encode(array_values([...$demoService->findUsers(array_slice($args, 1))]), JSON_PRETTY_PRINT)."\n";
+} elseif ($mode === 'delete') {
     $demoService->deleteUsers();
     echo json_encode(['message' => 'Deleted users', 'success' => 1], JSON_PRETTY_PRINT)."\n";
-} else if ($mode === 'save' || $mode === 'replace') {
+} elseif ($mode === 'save' || $mode === 'replace') {
     
     $problems = [];
     if (!$demoService->saveUsers($problems)) {

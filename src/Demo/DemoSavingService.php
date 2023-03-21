@@ -33,6 +33,11 @@ class DemoSavingService
         return $repository->saveUsers($this->loadJson(), $problems);
     }
     
+    function findUsers(array $ids): \Traversable {
+        $repository = $this->repositoryFactory->getUserRepository();
+        return $repository->loadUsers($ids);
+    }
+    
     function deleteUsers(): void
     {
         $repository = $this->repositoryFactory->getUserRepository();
